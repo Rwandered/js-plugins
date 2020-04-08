@@ -33,7 +33,7 @@ const _createModal = options => {
             ${options.closable ? `<span class="modal-close" data-close='true'>&times;</span>` : ''}
         </div>
         <div class="modal-body" data-content>
-            ${options.content}
+            ${options.content || ''}
         </div>
     </div>
     </div>`)
@@ -83,6 +83,9 @@ $.modal = options => {
         setTimeout(() => {
             $modal.classList.remove('hide')
             closing = false
+            if(typeof options.onClose === 'function') {
+              options.onClose()
+            }
         }, ANIMATION_SPEED)
       },
 
@@ -92,7 +95,7 @@ $.modal = options => {
     }
 
   const listenerModal = () => {
-    console.log(event)
+    // console.log(event)
     if(event.target.dataset.close) {
       modal.close()
     }
